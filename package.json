@@ -1,0 +1,26 @@
+{
+  "name": "dylodrone",
+  "version": "1.0.0",
+  "description": "DIY drone with Raspberry Pi 3 and Naze32",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LodySG/dylodrone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LodySG/dylodrone/issues"
+  },
+  "homepage": "https://github.com/LodySG/dylodrone#readme",
+  "dependencies": {
+    "ejs": "^2.5.5",
+    "express": "^4.14.0",
+    "jquery": "^3.1.1",
+    "nexusui": "^1.0.8",
+    "socket.io": "^1.7.2"
+  }
+}
