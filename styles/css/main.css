@@ -1,0 +1,28 @@
+/*
+#2F2B2B
+#F3368D
+#FFC468
+#FFF7CA
+*/
+body
+{
+    background-color: #2F2B2B;
+}
+
+#left
+{
+    height: 40vw;
+    width: 40vw;
+}
+
+#right
+{
+    height: 40vw;
+    width: 40vw;
+}
+
+#thro
+{
+    height: 40vw;
+    width: 10vw;
+}

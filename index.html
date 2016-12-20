@@ -1,14 +1,26 @@
 <!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>Dylodrone</title>
-    </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="images/favicon-bolt.ico" type="image/x-icon">
+    <link rel="stylesheet" type="" href="styles/css/main.css">
+    <title>Dylodrone</title>
+</head>
     <body>
-        
-        
+        <div id="message"></div>
+        <div id="pad">
 
-        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+            <canvas nx="button" id="left"></canvas>
+            <canvas nx="button" id="right"></canvas>
+            <canvas nx="slider" id="thro"></canvas>
+
+            <div id="deltaleft"></div>
+            <div id="deltaright"></div>
+
+        </div>
+        <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
         <script src="node_modules/nexusui/dist/nexusUI.min.js"></script>
         <script src="socket.io/socket.io.js"></script>
         <script src="js/command.js"></script>
