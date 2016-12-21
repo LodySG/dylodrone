@@ -1,6 +1,7 @@
 $(function(){
 
-    var throttle = 1000;
+    var throttle = 1500;
+     
 
     function is_touch_device() {
         return 'ontouchstart' in window  || navigator.maxTouchPoints;
@@ -16,7 +17,6 @@ $(function(){
     nx.colorize("accent", "#FFF7CA");
 
     setTimeout(function() {
-
         thro.set({value: 0});
         thro.mode = "relative";
 
@@ -32,9 +32,7 @@ $(function(){
 
         thro.on("*", (data) => {
             console.log(data);
-            if(data.press && data.press == 0)
-                thro.set({value: 0.5});
-            socket.emit('throttle', {throttle: data.value});
+            socket.emit('command', {throttle: data.value});
         });
     }, 200);
 });

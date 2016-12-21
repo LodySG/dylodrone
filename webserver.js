@@ -1,5 +1,5 @@
-var Droneserver = require('./droneserver');
-var Droneclient = require('./droneclient');
+//var Droneserver = require('./droneserver');
+//var Droneclient = require('./droneclient');
 var express = require('express');
 var path = require('path');
 var app = express();
@@ -21,17 +21,18 @@ app.get('/', function(req, res) {
     res.render(__dirname + '/index.html');
 });
 
-var droneserver = new Droneserver(portDrone);
-var droneclient = new Droneclient(hostDrone,portDrone,serial,baud);
+//var droneserver = new Droneserver(portDrone);
+//var droneclient = new Droneclient(hostDrone,portDrone,serial,baud);
 
 setTimeout(() => {
     setInterval(() => {
-        console.log(droneserver.getAttitude()); 
+        //console.log(droneserver.getAttitude()); 
     }, 100);
 }, 2000);
 
 io.sockets.on('connection', (socket) => {
-    socket.on('throttle', (data) => {
+    socket.on('command', (data) => {
+        console.log(data);
         /*
         var rc = {   
                     roll: 1500,
@@ -65,7 +66,7 @@ io.sockets.on('connection', (socket) => {
         console.log(rc);
         droneserver.setRc(rc);
         */
-        droneserver.getDevice();
+        //droneserver.getDevice();
     });
 });
 
