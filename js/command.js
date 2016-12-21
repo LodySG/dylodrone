@@ -6,6 +6,8 @@ $(function(){
         return 'ontouchstart' in window  || navigator.maxTouchPoints;
     }
 
+    var socket = io();
+
     //nx.colorize("fill", "#F3368D");
     //nx.colorize("border", "#FFC468");
     //nx.colorize("accent", "#FFF7CA");
@@ -30,6 +32,9 @@ $(function(){
 
         thro.on("*", (data) => {
             console.log(data);
+            if(data.press && data.press == 0)
+                thro.set({value: 0.5});
+            socket.emit('throttle', {throttle: data.value});
         });
     }, 200);
 });
