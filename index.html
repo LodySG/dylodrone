@@ -11,13 +11,22 @@
     <body>
         <div id="message"></div>
         <div id="pad">
+            <canvas class="jauge" nx="slider" id="thro"></canvas>    
+            
+            <table id="balances">
+                <tr><td>YAW</td><td><canvas class="balance" nx="crossfade" id="yw"></canvas></td></tr>
+                <tr><td>ROLL/PITCH</td><td><canvas nx="button" id="rollpi"></canvas></td></tr>
+            </table>
 
-            <canvas nx="button" id="left"></canvas>
-            <canvas nx="button" id="right"></canvas>
-            <canvas nx="slider" id="thro"></canvas>
+            <table>
+                <tr><td>ARM</td><td><canvas nx="toggle" id="arm"></canvas></td></tr>
+                <tr><td>ANGLE/HORIZON</td><td><canvas nx="toggle" id="angleh"></canvas></td></tr>
+                <tr><td>BARO</td><td><canvas nx="toggle" id="baro"></canvas></td></tr>
+            </table>
 
-            <div id="deltaleft"></div>
-            <div id="deltaright"></div>
+            <div id="state_arm"></div>
+            <div id="state_head"></div>
+            <div id="state_failsafe"></div>
 
         </div>
         <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>

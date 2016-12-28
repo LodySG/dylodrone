@@ -7,22 +7,31 @@
 body
 {
     background-color: #2F2B2B;
+    color: white;
 }
 
-#left
-{
-    height: 40vw;
-    width: 40vw;
-}
-
-#right
-{
-    height: 40vw;
-    width: 40vw;
-}
-
-#thro
+.jauge
 {
     height: 40vw;
     width: 10vw;
+}
+
+.balance
+{
+    height: 10vw;
+    width: 40vw;
+}
+
+#rollpi
+{
+    height: 40vw;
+    width: 40vw;
+}
+
+#balances
+{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -20vw;
 }
