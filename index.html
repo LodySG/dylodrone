@@ -17,22 +17,20 @@
                     <td>ROLL/YAW</td>
                 </tr>
                 <tr>
-                    <td><canvas nx="button" id="throttlepitch"></canvas></td>
-                    <td><canvas nx="button" id="rollyaw"></canvas></td>
+                    <td><canvas nx="button" id="throttleroll"></canvas></td>
+                    <td><canvas nx="button" id="pitchyaw"></canvas></td>
                 </tr>
                 <tr><td>ARM</td><td><canvas nx="toggle" id="arm"></canvas></td></tr>
                 <tr><td>ANGLE/HORIZON</td><td><canvas nx="toggle" id="angleh"></canvas></td></tr>
                 <tr><td>BARO</td><td><canvas nx="toggle" id="baro"></canvas></td></tr>
             </table>
 
-            <div id="state_arm"></div>
-            <div id="state_head"></div>
-            <div id="state_failsafe"></div>
+            <div id="controller_status"></div>
 
         </div>
         <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
         <script src="node_modules/nexusui/dist/nexusUI.min.js"></script>
-        <script src="socket.io/socket.io.js"></script>
+        <!--<script src="socket.io/socket.io.js"></script>-->
         <script src="js/command.js"></script>
     </body>
 </html>
