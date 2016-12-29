@@ -7,18 +7,26 @@ $(function(){
     BARO : aux[2] => 1500
 */
 
+    var log = (log) => {console.log(log)};
 
     var roll = 1500;
     var pitch = 1500;
     var yaw = 1500;
     var throttle = 1000;
+    var currentThrottle = 1000;
     var aux = [1000, 1100, 1000, 1000];
+
+    var rollpitchmax = 150;
+    var rollpitchmin = -150;
+
+    var seuilyaw = 0.050;
 
     var mid = 1500;
     var min = 1000;
     var max = 2000;
 
-    var initialPos = null;
+    var initialTPPos = null;
+    var initialRYPos = null;
 
     function is_touch_device() {
         return 'ontouchstart' in window  || navigator.maxTouchPoints;
@@ -31,28 +39,49 @@ $(function(){
     nx.colorize("accent", nx.randomColor());
 
     setTimeout(function() {
-        thro.set({value: 0});
-        yw.set({value: 0});
-        
-        thro.mode = "relative";
 
-        thro.on("*", (data) => {
-            throttle = nx.prune(nx.scale(data.value, 0, 1, min, max));
-        });
-
-        yw.on("*", (data) => {
-            yaw = nx.prune(nx.scale(data.value, -1, 1, min, max));
-        });
-
-        rollpi.on("*", (data) => {
-                        
+        throttlepitch.on("*", (data) => {            
             if(data.press == 1)
-                initialPos = {x: data.x, y: data.y};
+                initialTPPos = {x: data.x, y: data.y};
             
-            if(initialPos !== null)
+            if(data.press == 0){
+                initialTPPos = null;
+                currentThrottle = throttle;
+                pitch = 1500;
+                log({throttle: throttle,pitch: pitch});
+            }
+
+            if(initialTPPos !== null)
             {
-                console.log({x: (data.x - initialPos.x),y: (initialPos.y - data.y)});
-                roll = nx.prune(nx.scale(data.value, -1, 1, min, max));
+                var tempX = nx.clip((data.x - initialTPPos.x),-150,150);
+                var tempY = nx.clip((initialTPPos.y - data.y),-150,150);
+
+                throttletemp = nx.prune(nx.scale(tempY, -150, 150, (0-(min/2)),(min/2)));
+                log(throttletemp);
+                throttle = nx.clip(currentThrottle + throttletemp, min, max);
+                pitch = nx.prune(nx.scale(tempX, -150, 150, min, max));
+                log({throttle: throttle,pitch: pitch});
+            }
+        });
+
+        rollyaw.on("*", (data) => {            
+            if(data.press == 1)
+                initialRYPos = {x: data.x, y: data.y};
+            
+            if(data.press == 0){
+                initialRYPos = null;
+                roll = 1500;
+                pitch = 1500;
+            }
+
+            if(initialRYPos !== null)
+            {
+                var tempX = nx.clip((data.x - initialRYPos.x),-150,150);
+                var tempY = nx.clip((initialRYPos.y - data.y),-150,150);
+
+                roll = nx.prune(nx.scale(tempX, -150, 150, min, max));
+                pitch = nx.prune(nx.scale(tempY, -150, 150, min, max));
+                log({roll: roll,pitch: pitch});
             }
         });
 
@@ -93,9 +122,20 @@ $(function(){
 
         //console.log(controller);
     },100);
-    /*
-    socket.on("status", (data) => {
-        console.log(data);
-    });
-    */
+    
+    setInterval(() => {
+
+        var controller = {
+            roll: roll,
+            pitch: pitch,
+            yaw: yaw,
+            throttle: throttle,
+            aux: aux
+        };
+
+        log(controller);
+
+        //console.log(controller);
+    },3000);
+
 });

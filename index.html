@@ -10,15 +10,16 @@
 </head>
     <body>
         <div id="message"></div>
-        <div id="pad">
-            <canvas class="jauge" nx="slider" id="thro"></canvas>    
-            
+        <div id="pad">            
             <table id="balances">
-                <tr><td>YAW</td><td><canvas class="balance" nx="crossfade" id="yw"></canvas></td></tr>
-                <tr><td>ROLL/PITCH</td><td><canvas nx="button" id="rollpi"></canvas></td></tr>
-            </table>
-
-            <table>
+                <tr>
+                    <td>THROTTLE/PITCH</td>
+                    <td>ROLL/YAW</td>
+                </tr>
+                <tr>
+                    <td><canvas nx="button" id="throttlepitch"></canvas></td>
+                    <td><canvas nx="button" id="rollyaw"></canvas></td>
+                </tr>
                 <tr><td>ARM</td><td><canvas nx="toggle" id="arm"></canvas></td></tr>
                 <tr><td>ANGLE/HORIZON</td><td><canvas nx="toggle" id="angleh"></canvas></td></tr>
                 <tr><td>BARO</td><td><canvas nx="toggle" id="baro"></canvas></td></tr>
