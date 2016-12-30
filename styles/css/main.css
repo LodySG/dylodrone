@@ -30,6 +30,7 @@ body
 
 #pitchyaw
 {
+    right: 0;
     height: 40vw;
     width: 40vw;
 }

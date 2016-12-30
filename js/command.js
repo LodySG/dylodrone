@@ -22,6 +22,7 @@ $(function(){
     var throttle = min;
     var currentThrottle = min;
     var aux = [min, 1100, min, min];
+    var acc = 0;
 
     var initialTPPos = null;
     var initialRYPos = null;
@@ -30,7 +31,7 @@ $(function(){
         return 'ontouchstart' in window  || navigator.maxTouchPoints;
     }
 
-    // var socket = io();
+    var socket = io();
 
     nx.colorize("fill", nx.randomColor());
     nx.colorize("border", nx.randomColor());
@@ -146,9 +147,9 @@ $(function(){
             aux: aux
         };
         $("#controller_status").html("roll = "+roll+", pitch = "+pitch+", yaw = "+yaw+", throttle = "+throttle+", aux1 = "+aux[0]+", aux2 = "+aux[1]+", aux3 = "+aux[2]+", aux4 = "+aux[3])
-        //socket.emit('command', controller);
+        socket.emit('command', controller);
 
         //console.log(controller);
-    },50);
+    },100);
 
 });
