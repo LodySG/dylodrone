@@ -11,7 +11,7 @@
     <body>
         <div id="message"></div>
         <div id="pad">            
-            <table id="cadrillage">
+            <table id="cadrillage_command">
                 <tr>
                     <td id="tr">THROTTLE/ROLL</td>
                     <td id="py">PITCH/YAW</td>
@@ -20,9 +20,13 @@
                     <td id="tr"><canvas nx="button" id="throttleroll"></canvas></td>
                     <td id="py"><canvas nx="button" id="pitchyaw"></canvas></td>
                 </tr>
-                <tr><td>ARM</td><td><canvas nx="toggle" id="arm"></canvas></td></tr>
-                <tr><td>ANGLE/HORIZON</td><td><canvas nx="toggle" id="angleh"></canvas></td></tr>
-                <tr><td>BARO</td><td><canvas nx="toggle" id="baro"></canvas></td></tr>
+            </table>
+            <table id="cadrillage_button"> 
+                <tr>
+                    <td id="text_right">ARM : </td><td><canvas nx="toggle" id="arm"></canvas></td>
+                    <td id="text_right">ANGLE/HORIZON : </td><td><canvas nx="toggle" id="angleh"></canvas></td>
+                    <td id="text_right">BARO : </td><td><canvas nx="toggle" id="baro"></canvas></td>
+                </tr>
             </table>
 
             <div id="controller_status"></div>
