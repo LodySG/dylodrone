@@ -135,6 +135,13 @@ $(function(){
                 aux[2] = 1000;
         });
 
+        accel.on("*", (data) => {
+            //if(data.press == 1)
+                // socket.emit('calibrage', true);
+            //if(data.press == 0)
+                // socket.emit('calibrage', false); 
+        });
+
     }, 200);
 
     setInterval(() => {

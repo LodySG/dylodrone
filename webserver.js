@@ -25,7 +25,10 @@ app.get('/', function(req, res) {
 
 io.sockets.on('connection', (socket) => {
 
-    
+    socket.on("calibrage", (data) => {
+        //client.hset("drone:controller", "calibrage", parseInt(data));
+    });
+
     socket.on('command', (data) => {
 
         //console.log(data);
