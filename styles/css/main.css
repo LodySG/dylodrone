@@ -22,13 +22,13 @@ body
     width: 40vw;
 }
 
-#throttleroll
+#throttleyaw
 {
     height: 40vw;
     width: 40vw;
 }
 
-#pitchyaw
+#pitchroll
 {
     right: 0;
     height: 40vw;
@@ -41,7 +41,7 @@ body
     width: 100%;
 }
 
-#py
+#pr
 {
     text-align: right;
 }

@@ -106,8 +106,8 @@ class MultiWii:
             b = None
             b = self.ser.write(struct.pack('<3c2B%dhB' % len(data), *total_data))
         except Exception, error:
-            #print "\n\nError in sendCMD."
-            #print "("+str(error)+")\n\n"
+            print "\n\nError in sendCMD."
+            print "("+str(error)+")\n\n"
             pass
 
     """Function for sending a command to the board and receive attitude"""

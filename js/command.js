@@ -12,8 +12,8 @@ $(function(){
     var mid = 1500;
     var min = 1000;
     var max = 2000;
-    var seuil = 30;
-    var maxPixVar = 150;
+    var seuil = 20;
+    var maxPixVar = 100;
     var minPixVar = 0 - maxPixVar;
 
     var roll = mid;
@@ -24,14 +24,14 @@ $(function(){
     var aux = [min, 1100, min, min];
     var acc = 0;
 
-    var initialTPPos = null;
-    var initialRYPos = null;
+    var initialTYPos = null;
+    var initialPRPos = null;
 
     function is_touch_device() {
         return 'ontouchstart' in window  || navigator.maxTouchPoints;
     }
 
-    // var socket = io();
+    var socket = io();
 
     nx.colorize("fill", nx.randomColor());
     nx.colorize("border", nx.randomColor());
@@ -39,21 +39,21 @@ $(function(){
 
     setTimeout(function() {
 
-        throttleroll.on("*", (data) => {            
+        throttleyaw.on("*", (data) => {            
             if(data.press == 1)
-                initialTPPos = {x: data.x, y: data.y};
+                initialTYPos = {x: data.x, y: data.y};
             
             if(data.press == 0){
-                initialTPPos = null;
+                initialTYPos = null;
                 currentThrottle = throttle;
-                roll = mid;
+                yaw = mid;
                 //log({throttle: throttle,pitch: pitch});
             }
 
-            if(initialTPPos !== null)
+            if(initialTYPos !== null)
             {
-                var tempX1 = data.x - initialTPPos.x;
-                var tempY1 = initialTPPos.y - data.y;
+                var tempX1 = data.x - initialTYPos.x;
+                var tempY1 = initialTYPos.y - data.y;
                 
                 //log({tempX1: tempX1, tempY1: tempY1});
                 
@@ -74,25 +74,25 @@ $(function(){
                 tempY1 = nx.clip(tempY1,-maxPixVar,maxPixVar);
                 throttletemp = nx.prune(nx.scale(tempY1, -maxPixVar, maxPixVar, -min,min));
                 throttle = nx.clip(currentThrottle + throttletemp, min, max);
-                roll = nx.prune(nx.scale(tempX1, -maxPixVar, maxPixVar, min, max));
+                yaw = nx.prune(nx.scale(tempX1, -maxPixVar, maxPixVar, min, max));
                 //log({throttle: throttle,roll: roll});
             }
         });
 
-        pitchyaw.on("*", (data) => {            
+        pitchroll.on("*", (data) => {            
             if(data.press == 1)
-                initialRYPos = {x: data.x, y: data.y};
+                initialPRPos = {x: data.x, y: data.y};
             
             if(data.press == 0){
-                initialRYPos = null;
+                initialPRPos = null;
                 pitch = mid;
-                yaw = mid;
+                roll = mid;
             }
 
-            if(initialRYPos !== null)
+            if(initialPRPos !== null)
             {
-                var tempX2 = data.x - initialRYPos.x;
-                var tempY2 = initialRYPos.y - data.y;
+                var tempX2 = data.x - initialPRPos.x;
+                var tempY2 = initialPRPos.y - data.y;
                 
                 if(tempX2 < seuil && tempX2 > -seuil)
                     tempX2 = 0;
@@ -108,9 +108,9 @@ $(function(){
 
                 tempX2 = nx.clip(tempX2,-maxPixVar,maxPixVar);
                 tempY2 = nx.clip(tempY2,-maxPixVar,maxPixVar);
-                yaw = nx.prune(nx.scale(tempX2, -maxPixVar, maxPixVar, min, max));
+                roll = nx.prune(nx.scale(tempX2, -maxPixVar, maxPixVar, min, max));
                 pitch = nx.prune(nx.scale(tempY2, -maxPixVar, maxPixVar, min, max));
-                //log({roll: roll,yaw: yaw});
+                log({roll: roll,yaw: yaw});
             }
         });
 
@@ -136,10 +136,10 @@ $(function(){
         });
 
         accel.on("*", (data) => {
-            //if(data.press == 1)
-                // socket.emit('calibrage', true);
-            //if(data.press == 0)
-                // socket.emit('calibrage', false); 
+            if(data.press == 1)
+                 socket.emit('calibrage', true);
+            if(data.press == 0)
+                 socket.emit('calibrage', false); 
         });
 
     }, 200);
@@ -153,10 +153,8 @@ $(function(){
             throttle: throttle,
             aux: aux
         };
-        $("#controller_status").html("roll = "+roll+", pitch = "+pitch+", yaw = "+yaw+", throttle = "+throttle+", aux1 = "+aux[0]+", aux2 = "+aux[1]+", aux3 = "+aux[2]+", aux4 = "+aux[3])
-        // socket.emit('command', controller);
-
-        //console.log(controller);
+        $("#controller_status").html("roll = "+roll+", pitch = "+pitch+", yaw = "+yaw+", throttle = "+throttle+", aux1 = "+aux[0]+", aux2 = "+aux[1]+", aux3 = "+aux[2]+", aux4 = "+aux[3]);
+         socket.emit('command', controller);
     },100);
 
 });
