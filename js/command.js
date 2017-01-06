@@ -13,8 +13,10 @@ $(function(){
     var min = 1000;
     var max = 2000;
     var seuil = 20;
+    var seuil_tilt = 0.06;
     var maxPixVar = 100;
-    var minPixVar = 0 - maxPixVar;
+    var maxInclinaison = 0.40;
+    var moveInitial = null;
 
     var roll = mid;
     var pitch = mid;
@@ -27,10 +29,6 @@ $(function(){
     var initialTYPos = null;
     var initialPRPos = null;
 
-    function is_touch_device() {
-        return 'ontouchstart' in window  || navigator.maxTouchPoints;
-    }
-
     var socket = io();
 
     nx.colorize("fill", nx.randomColor());
@@ -39,13 +37,61 @@ $(function(){
 
     setTimeout(function() {
 
+        move.on("*", (data) => {
+            var x = nx.prune(data.x,2);
+            var y = nx.prune(data.y,2);
+            var z = nx.prune(data.z,2);
+
+            if(moveInitial !== null)
+            {
+                var moveX = nx.prune(x - moveInitial.x,2);
+                var moveY = nx.prune(moveInitial.y - y,2);
+
+                if(moveX < seuil_tilt && moveX > -seuil_tilt)
+                    moveX = 0;
+                else{
+                    moveX = moveX >= 0 ? (moveX-seuil_tilt) : (moveX+seuil_tilt);
+                }
+
+                if(moveY < seuil_tilt && moveY > -seuil_tilt)
+                    moveY = 0;
+                else{
+                    moveY = moveY >= 0 ? (moveY-seuil_tilt) : (moveY+seuil_tilt);
+                }
+                moveX = nx.prune(moveX,2);
+                moveY = nx.prune(moveY,2);
+
+                moveX = nx.clip(moveX, -maxInclinaison, maxInclinaison);
+                moveY = nx.clip(moveY, -maxInclinaison, maxInclinaison);
+                $("#tilt_infos").html("moveX : "+moveX+", moveY : "+moveY);
+
+                roll = nx.prune(nx.scale(moveX, -maxInclinaison, maxInclinaison, min, max));
+                pitch = nx.prune(nx.scale(moveY, -maxInclinaison, maxInclinaison, min, max));
+            }
+            else
+            {
+                roll = mid;
+                pitch = mid;
+            }
+
+
+        });
+
         throttleyaw.on("*", (data) => {            
-            if(data.press == 1)
+            if(data.press == 1){
                 initialTYPos = {x: data.x, y: data.y};
+
+                var x = nx.prune(move.val.x,2);
+                var y = nx.prune(move.val.y,2);
+                var z = nx.prune(move.val.z,2);
+
+                moveInitial = {x: x,y: y,z: z};
+            }
             
-            if(data.press == 0){
+            if(data.press === 0){
                 initialTYPos = null;
                 currentThrottle = throttle;
+                moveInitial = null;
                 yaw = mid;
                 //log({throttle: throttle,pitch: pitch});
             }
@@ -60,16 +106,15 @@ $(function(){
                 if(tempX1 < seuil && tempX1 > -seuil)
                     tempX1 = 0;
                 else{
-                    tempX1 = tempX1 >= 0 ? (tempX1-seuil) : (tempX1+seuil)
+                    tempX1 = tempX1 >= 0 ? (tempX1-seuil) : (tempX1+seuil);
                 }
 
                 if(tempY1 < seuil && tempY1 > -seuil)
                     tempY1 = 0;
                 else{
-                    tempY1 = tempY1 >= 0 ? (tempY1-seuil) : (tempY1+seuil)
+                    tempY1 = tempY1 >= 0 ? (tempY1-seuil) : (tempY1+seuil);
                 }
 
-                //log({tempX1After: tempX1, tempY1After: tempY1});
                 tempX1 = nx.clip(tempX1,-maxPixVar,maxPixVar);
                 tempY1 = nx.clip(tempY1,-maxPixVar,maxPixVar);
                 throttletemp = nx.prune(nx.scale(tempY1, -maxPixVar, maxPixVar, -min,min));
@@ -83,7 +128,7 @@ $(function(){
             if(data.press == 1)
                 initialPRPos = {x: data.x, y: data.y};
             
-            if(data.press == 0){
+            if(data.press === 0){
                 initialPRPos = null;
                 pitch = mid;
                 roll = mid;
@@ -97,13 +142,13 @@ $(function(){
                 if(tempX2 < seuil && tempX2 > -seuil)
                     tempX2 = 0;
                 else{
-                    tempX2 = tempX2 >= 0 ? (tempX2-seuil) : (tempX2+seuil)
+                    tempX2 = tempX2 >= 0 ? (tempX2-seuil) : (tempX2+seuil);
                 }
 
                 if(tempY2 < seuil && tempY2 > -seuil)
                     tempY2 = 0;
                 else{
-                    tempY2 = tempY2 >= 0 ? (tempY2-seuil) : (tempY2+seuil)
+                    tempY2 = tempY2 >= 0 ? (tempY2-seuil) : (tempY2+seuil);
                 }
 
                 tempX2 = nx.clip(tempX2,-maxPixVar,maxPixVar);

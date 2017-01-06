@@ -13,29 +13,32 @@
         <div id="pad">            
             <table id="cadrillage_command">
                 <tr>
-                    <td id="ty">THROTTLE/YAW</td>
-                    <td id="pr">PITCH/ROLL</td>
+                    <td class="ty">THROTTLE/YAW</td>
+                    <td class="pr">PITCH/ROLL</td>
                 </tr>
                 <tr>
-                    <td id="ty"><canvas nx="button" id="throttleyaw"></canvas></td>
-                    <td id="pr"><canvas nx="button" id="pitchroll"></canvas></td>
+                    <td class="ty"><canvas nx="button" id="throttleyaw"></canvas></td>
+                    <td class="pr"><canvas nx="button" id="pitchroll"></canvas></td>
                 </tr>
             </table>
             <table id="cadrillage_button"> 
                 <tr>
                     <td id="text_right">ARM : </td><td><canvas nx="toggle" id="arm"></canvas></td>
                     <td id="text_right">ANGLE/HORIZON : </td><td><canvas nx="toggle" id="angleh"></canvas></td>
+                </tr>
+                <tr>
                     <td id="text_right">BARO : </td><td><canvas nx="toggle" id="baro"></canvas></td>
                     <td id="text_right">ACC_CAL : </td><td><canvas nx="button" id="accel"></canvas></td>
                 </tr>
             </table>
-
-            <div id="controller_status"></div>
-
         </div>
+        <canvas id="move" nx="tilt"></canvas>
+        <div id="tilt_infos"></div>
+        <div id="controller_status"></div>
         <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
         <script src="node_modules/nexusui/dist/nexusUI.min.js"></script>
         <script src="socket.io/socket.io.js"></script>
+        <script src="js/devicecheck.js"></script>
         <script src="js/command.js"></script>
     </body>
 </html>
