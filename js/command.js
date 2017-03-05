@@ -161,9 +161,9 @@ $(function(){
 
         arm.on("*", (data) => {
             if(data.value == 1)
-                aux[0] = 2000;
+                aux[0] = 1800;
             else
-                aux[0] = 1000;
+                aux[0] = 1100;
         });
 
         angleh.on("*", (data) => {
@@ -177,7 +177,7 @@ $(function(){
             if(data.value == 1)
                 aux[2] = 1500;
             else
-                aux[2] = 1000;
+                aux[2] = 1100;
         });
 
         accel.on("*", (data) => {

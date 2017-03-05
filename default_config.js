@@ -19,3 +19,5 @@ var controller = {
      throttle:  1000,
      aux: [1000, 1100, 1000, 1000]
 };
+
+//#[roll,pitch,yaw,throttle,aux1,aux2,aux3,aux4]
